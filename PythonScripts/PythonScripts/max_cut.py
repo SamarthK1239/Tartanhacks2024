@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import networkx as nx
+import numpy as np
 from qiskit_optimization.applications import Maxcut
 from qiskit_algorithms import NumPyMinimumEigensolver
 from qiskit_optimization.algorithms import MinimumEigenOptimizer
@@ -24,6 +25,7 @@ def draw_graph(G, colors, pos):
     plt.show()
 
 def main_max_cut(G):
+    nodes = list(G.nodes())
     w = nx.to_numpy_array(G)
 
     max_cut = Maxcut(w)
@@ -33,9 +35,12 @@ def main_max_cut(G):
 
     exact = MinimumEigenOptimizer(NumPyMinimumEigensolver())
     result = exact.solve(qp)
-    print(result.fval)
+    #print(result.fval)
+    #print("Variable names: ", result.variable_names)
+    out = []
     for i in result:
-        print(i)
+        out += [i]
+    return out, nodes
 
-#main_max_cut(G)
+#print(main_max_cut(G))
 
