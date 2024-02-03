@@ -1,4 +1,5 @@
 import asyncio
+import random
 
 import googlemaps
 
@@ -22,8 +23,7 @@ def making_weight_matrices():
     #places = input_string.split()
     #get landmarks on paths and run weather checking on them
     #check safety information of landmarks
-    graph = BuildingGraph.build_graph()
-    print("graph:", graph)
+
     risk = list(list())
     cost = list(list())
     medium = list(list())
@@ -34,8 +34,11 @@ def making_weight_matrices():
 
 
     # Run the initializer
-    inputs = ["Pittsburgh PA", "State College PA", "Erie PA", "Harrisburg PA", "Philadelphia PA"]
+    inputs = ["Pittsburgh PA", "State College PA", "Erie PA", "Harrisburg PA", "Philadelphia PA", "New Jersey NJ", "New York NY", "Chicago IL", "Boston MA", "Allentown PA"]
+              #"Gettysburg PA", "Bethlehem PA"]
     gmaps_api_ops.run(inputs)
+    graph = BuildingGraph.build_graph()
+    print("graph:", graph)
     # Parse the specific JSON data
     parsed = gmaps_api_ops.directions_parse_json_dictionary()
 
@@ -54,16 +57,22 @@ def making_weight_matrices():
                 LATITUDE = parsed[count][0]['lat']
                 LONGITUDE  = parsed[count][0]['lng']
                 risks = asyncio.run(ConnectAPI.get_weather_details(LATITUDE, LONGITUDE))
+                if risks is not None:
+                    risk_set.append(risks[0] / 2.0 + risks[1] / 30.0)
+                else:
+                    risk_set.append(random.random()+random.random())
+
                 address = gmaps.reverse_geocode({'lat': LATITUDE, 'lng': LONGITUDE})
-                print("address ", address)
-                state = address[0]['address_components'][5]['short_name']
+                #print("address ", address)
+                #state = address[0]['address_components'][5]['short_name']
+                state = 'PA'
                 print("state ", state)
-                risk_set.append(risks[0]/2.0 + risks[1]/30.0)
+
                 #cost.append()
                 if(len(state) == 2 and (state != 'US')):
-                    cost_set.append(int(graph[i][j][0].split()[0]) * gas_prices[state])
+                    cost_set.append(float(graph[i][j][0].split()[0].replace(',', '')) * gas_prices[state])
                 else:
-                    cost_set.append(int(graph[i][j][0].split()[0]) * gas_prices['PA'])
+                    cost_set.append(float(graph[i][j][0].split()[0].replace(',', '')) * gas_prices['PA'])
                 medium_set.append(risk_set[j]+cost_set[j]*1.5)
 
             else:
@@ -80,6 +89,7 @@ def making_weight_matrices():
         cost_set = []
         print("cost:", cost)
         print("risk", risk)
+        print("medium", medium)
     return [risk, cost, medium]
 
 making_weight_matrices()
