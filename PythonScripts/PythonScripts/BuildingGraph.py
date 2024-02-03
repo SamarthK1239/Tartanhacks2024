@@ -53,7 +53,7 @@ graph = []
 
 
 def build_graph():
-    parsed = gao.parse_json_dictionary()
+    parsed = gao.distance_matrix_parse_json_dictionary()
     dictionary = parsed[0]
     keys = list(dictionary.keys())
 
@@ -61,12 +61,8 @@ def build_graph():
         print(origin)
         add_vertex(origin)
 
-    i = 0
     for key in keys:
-        # current_origin = parsed[1][0][i]
-        # i += 1
         for element in [dictionary[key]]:
-            # print(element["origin"])
             add_edge(element["origin"], element["destination"],
                      [element["params"]["distance"], element["params"]["duration"]])
 

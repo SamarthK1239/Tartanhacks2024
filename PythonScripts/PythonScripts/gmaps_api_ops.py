@@ -15,10 +15,14 @@ def get_distance_matrix(client, origins, destinations):
     return client.distance_matrix(origins, destinations, mode="driving", departure_time="now")
 
 
-def parse_json_dictionary():
+def get_directions(client, origin, destination):
+    return client.directions(origin, destination, mode="driving", departure_time="now")
+
+
+def distance_matrix_parse_json_dictionary():
     individual_statements = {}
     addresses = []
-    with open("sample.json") as json_file:
+    with open("distance_matrix_raw_output.json") as json_file:
         data = json.load(json_file)
         addresses.append(data['origin_addresses'])
         i = 0
@@ -37,18 +41,41 @@ def parse_json_dictionary():
     return [individual_statements, addresses]
 
 
+def directions_parse_json_dictionary():
+    statements = {}
+    individual_statements = []
+    with open("directions_raw_output.json") as json_file:
+        data = json.load(json_file)
+        for i in range(len(data)):
+            for j in range(len(data[i][0]['legs'][0]['steps'])):
+                try:
+                    individual_statements.append([data[i][0]['legs'][0]['steps'][j]['start_location'],
+                                                  data[i][0]['legs'][0]['steps'][j]['distance']['text']])
+                except:
+                    print("Not found")
+        return individual_statements
+
+
 def export_json(parsed_json_data):
     with open("sample.json", "w") as outfile:
         json.dump(parsed_json_data, outfile)
 
 
-def run(origins):
+def run(locations):
     client = get_gmaps_client()
-    origins = ["Pittsburgh PA", "State College PA", "Erie PA", "Harrisburg PA", "Philadelphia PA"]
-    destinations = ["Pittsburgh PA", "State College PA", "Erie PA", "Harrisburg PA", "Philadelphia PA"]
+    origins = locations
+    destinations = locations
 
-    response = get_distance_matrix(client, origins, destinations)
-    print(response)
+    distance_matrix = get_distance_matrix(client, origins, destinations)
 
-    with open("sample.json", "w") as outfile:
-        json.dump(response, outfile)
+    with open("distance_matrix_raw_output.json", "w") as outfile:
+        json.dump(distance_matrix, outfile)
+    outfile.close()
+    directions = []
+    for origin in origins:
+        for destination in destinations:
+            directions.append(get_directions(client, origin, destination))
+
+    with open("directions_raw_output.json", "w") as outfile:
+        json.dump(directions, outfile)
+    outfile.close()
