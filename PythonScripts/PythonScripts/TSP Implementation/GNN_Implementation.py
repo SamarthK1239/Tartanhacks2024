@@ -496,7 +496,7 @@ hidden_dim = 300
 num_layers = 5
 mlp_layers = 2
 learning_rate = 0.001
-max_epochs = 1
+max_epochs = 60
 batches_per_epoch = 10000
 
 variables = {
