@@ -44,47 +44,33 @@ def print_graph():
                 print(vertices[i], "->", vertices[j], "edge weight:", graph[i][j])
 
 
-# Driver code
+# Driver Code
 # stores the vertices in the graph
 vertices = []
 # stores the number of vertices in the graph
 vertices_no = 0
 graph = []
-#
-# # Add vertices to the graph
-# add_vertex("A")
-# add_vertex("B")
-# add_vertex("C")
-# add_vertex("D")
-#
-# # Add the edges between the vertices by specifying
-# # the from and to vertex along with the edge weights.
-# add_edge("A", "B", 1)
-# add_edge("A", "C", 1)
-# add_edge("B", "C", 3)
-# add_edge("C", "D", 4)
-# add_edge("D", "A", 5)
-#
-# print_graph()
-# print("Internal representation:", graph)
 
 
-parsed = gao.parse_json_dictionary()
-dictionary = parsed[0]
-keys = list(dictionary.keys())
+def build_graph():
+    parsed = gao.parse_json_dictionary()
+    dictionary = parsed[0]
+    keys = list(dictionary.keys())
 
-for origin in parsed[1][0]:
-    print(origin)
-    add_vertex(origin)
+    for origin in parsed[1][0]:
+        print(origin)
+        add_vertex(origin)
 
-i = 0
-for key in keys:
-    # current_origin = parsed[1][0][i]
-    # i += 1
-    for element in [dictionary[key]]:
-        # print(element["origin"])
-        add_edge(element["origin"], element["destination"],
-                 [element["params"]["distance"], element["params"]["duration"]])
+    i = 0
+    for key in keys:
+        # current_origin = parsed[1][0][i]
+        # i += 1
+        for element in [dictionary[key]]:
+            # print(element["origin"])
+            add_edge(element["origin"], element["destination"],
+                     [element["params"]["distance"], element["params"]["duration"]])
 
-print_graph()
-print("Internal representation: ", graph)
+    print_graph()
+    print("Internal representation: ", graph)
+
+    return graph
