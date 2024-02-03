@@ -496,7 +496,7 @@ hidden_dim = 300
 num_layers = 5
 mlp_layers = 2
 learning_rate = 0.001
-max_epochs = 60
+max_epochs = 1
 batches_per_epoch = 10000
 
 variables = {
@@ -810,12 +810,12 @@ def plot_predictions(x_nodes_coord, x_edges, x_edges_values, y_edges, y_pred_edg
         plt.show()
 
 
-torch.save(net.state_dict(), 'Models/GraphML_GNN.pth')
+# torch.save(net.state_dict(), 'Models/GraphML_GNN.pth')
 
 # Set evaluation mode
 net.eval()
 
-num_samples = 10
+num_samples = 2
 num_nodes = variables['num_nodes']
 num_neighbors = variables['num_neighbors']
 test_filepath = variables['test_filepath']
@@ -850,6 +850,7 @@ with torch.no_grad():
         y_preds.append(y_pred)
 
 y_preds = torch.squeeze(torch.stack(y_preds))
+print(y_preds.dim())
 # Plot prediction visualizations
 plot_predictions(x_nodes_coord, x_edges, x_edges_values, y_edges, y_preds, num_plots=num_samples)
 
