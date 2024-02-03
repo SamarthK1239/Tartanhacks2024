@@ -496,7 +496,7 @@ hidden_dim = 300
 num_layers = 5
 mlp_layers = 2
 learning_rate = 0.001
-max_epochs = 2
+max_epochs = 1
 batches_per_epoch = 10000
 
 variables = {
@@ -521,7 +521,7 @@ variables = {
     'accumulation_steps': 1,
     'learning_rate': learning_rate,
     'decay_rate': 1.01
-    }
+}
 net = nn.DataParallel(ResidualGatedGCNModel(variables, torch.cuda.FloatTensor, torch.cuda.LongTensor))
 net.cuda()
 
@@ -809,6 +809,8 @@ def plot_predictions(x_nodes_coord, x_edges, x_edges_values, y_edges, y_pred_edg
         plot_tsp_heatmap(plt2, x_coord.squeeze(), W_val.squeeze(), W_sol_probs.squeeze(), 'Prediction Heatmap')
         plt.show()
 
+
+torch.save(net.state_dict(), 'Models/GraphML_GNN.pth')
 
 # Set evaluation mode
 net.eval()
