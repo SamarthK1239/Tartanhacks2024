@@ -8,7 +8,7 @@ import json
 def get_gmaps_client():
     path = Path("Env/.env")
     load_dotenv(dotenv_path=path)
-    return googlemaps.Client(key=os.getenv('GMAPS_API_KEY'))
+    return googlemaps.Client(key='AIzaSyBeE0j7ZCad54Ec7Njq9PEwv4qmYqUF2qY')
 
 
 def get_distance_matrix(client, origins, destinations):
