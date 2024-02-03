@@ -27,7 +27,12 @@ def draw_tsp_solution(G, order, colors, pos):
     plt.show()
 
 def brute_force_tsp(w, N):
-    a = list(permutations(range(1, N)))
+    mapping = {}
+    for i in range(len(N)):
+        mapping[i] = N[i]
+    print("mapping is: ", mapping)
+
+    a = list(permutations(range(1, len(N))))
     last_best_distance = 1e10
     for i in a:
         distance = 0
@@ -41,6 +46,12 @@ def brute_force_tsp(w, N):
             best_order = order
             last_best_distance = distance
             print("order = " + str(order) + " Distance = " + str(distance))
+    
+    best_order = list(best_order)
+    print("best order is: ", best_order)
+    for j in range(len(best_order)):
+        best_order[j] = mapping[best_order[j]]
+    
     return last_best_distance, best_order
 
 '''n = 5
@@ -51,7 +62,7 @@ G.add_nodes_from(vertices)
 for edge in edges:
     G.add_edge(edge[0], edge[1], weight = 3)'''
 
-def main(G):
+def main_tsp(G):
     #tsp = Tsp.create_random_instance(n, seed=123)
     tsp = Tsp(G)
     adj_matrix = nx.to_numpy_array(tsp.graph)
@@ -62,13 +73,14 @@ def main(G):
     draw_graph(tsp.graph, colors, pos)
 
 
-    best_distance, best_order = brute_force_tsp(adj_matrix, len(G.nodes()))
+    best_distance, best_order = brute_force_tsp(adj_matrix, list(G.nodes()))
     print(
         "Best order from brute force = "
         + str(best_order)
         + " with total distance = "
         + str(best_distance)
     )
+    return best_order
 
 
 
