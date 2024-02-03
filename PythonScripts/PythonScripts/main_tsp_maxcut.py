@@ -33,18 +33,20 @@ def biggest_cluster(clusters):
             biggest = i
     
     return biggest
+    
+def refactor():
+    pass
+
 
 G = nx.complete_graph(6)
-for i in range(5):
-    for j in range(i+5, 5):
-        G[i, j]["weight"] = 5
-        
-vertices = [0, 1, 2, 3, 4]
+nx.set_edge_attributes(G, values = 3, name = 'weight')
+
+'''vertices = [0, 1, 2, 3, 4]
 edges = [(0, 1), (0, 3), (0, 4), (1, 2), (2, 3), (4, 1)]
 G = nx.Graph()
 G.add_nodes_from(vertices)
 for edge in edges:
-    G.add_edge(edge[0], edge[1], weight = 3)
+    G.add_edge(edge[0], edge[1], weight = 3)'''
 print(nx.to_numpy_array(G))
 
 print(list(main(G)))
