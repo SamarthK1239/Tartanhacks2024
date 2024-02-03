@@ -34,7 +34,7 @@ def making_weight_matrices():
 
 
     # Run the initializer
-    inputs = ["Pittsburgh PA", "State College PA", "Erie PA", "Harrisburg PA"]#, "Philadelphia PA"]
+    inputs = ["Pittsburgh PA", "State College PA", "Erie PA", "Harrisburg PA", "Philadelphia PA"]
     gmaps_api_ops.run(inputs)
     # Parse the specific JSON data
     parsed = gmaps_api_ops.directions_parse_json_dictionary()
