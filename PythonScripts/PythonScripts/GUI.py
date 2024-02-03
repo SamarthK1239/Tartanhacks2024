@@ -28,6 +28,33 @@ def display_trucks():
     print("\n")
 
 
+def refactor(truck_no, delay):
+    truck = trucks[truck_no]
+    if truck.position == len(truck.cluster) - 1:
+        print("Truck has already finished journey")
+        return
+    else:
+        edge = (truck.cluster[truck.position], truck.cluster[truck.position + 1])
+    
+    G[edge[0]][edge[1]]['weight'] += delay
+
+    adjMatrix = nx.to_numpy_array(G)
+    print(adjMatrix)
+    cost = 10000000
+    remaining = truck.cluster[truck.position+1 :]
+    for permutation in list(permutations(remaining)):
+        temp_cost = adjMatrix[truck.position][permutation[0]]
+        for i in range(len(permutation) - 1):
+            j = i+1
+            temp_cost += adjMatrix[i][j]
+        if temp_cost < cost:
+            cost = temp_cost
+            best_order = permutation
+    
+    print("new order is: ", best_order, "\nand cost is ", cost)
+    truck.cluster = truck.cluster[: truck.position+1] + list(best_order)
+            
+
 
 while True:
     display_trucks()
@@ -39,5 +66,5 @@ while True:
     elif move == 2:
         truck_no = int(input("Which truck will have a problem? "))
         delay = int(input("What is the delay cost for this truck? "))
-        refactor()
+        refactor(truck_no, delay)
     

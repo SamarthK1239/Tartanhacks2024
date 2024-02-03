@@ -35,8 +35,8 @@ def main_max_cut(G):
 
     exact = MinimumEigenOptimizer(NumPyMinimumEigensolver())
     result = exact.solve(qp)
-    print(result.fval)
-    print("Variable names: ", result.variable_names)
+    #print(result.fval)
+    #print("Variable names: ", result.variable_names)
     out = []
     for i in result:
         out += [i]
