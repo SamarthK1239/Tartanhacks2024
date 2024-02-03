@@ -1,13 +1,8 @@
 import matplotlib.pyplot as plt
-import numpy as np
 import networkx as nx
-
 from qiskit_optimization.applications import Maxcut
 from qiskit_algorithms import NumPyMinimumEigensolver
-
 from qiskit_optimization.algorithms import MinimumEigenOptimizer
-
-# Generating a graph of 4 nodes
 
 '''n = 5  # Number of nodes in graph
 G = nx.MultiDiGraph()
@@ -28,10 +23,6 @@ def draw_graph(G, colors, pos):
     nx.draw_networkx_edge_labels(G, pos=pos, edge_labels=edge_labels)
     plt.show()
 
-
-#draw_graph(G, colors, pos)
-
-# Computing the weight matrix from the random graph
 def main_max_cut(G):
     w = nx.to_numpy_array(G)
 
