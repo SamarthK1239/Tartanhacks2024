@@ -66,20 +66,20 @@ def main_tsp(G):
     #tsp = Tsp.create_random_instance(n, seed=123)
     tsp = Tsp(G)
     adj_matrix = nx.to_numpy_array(tsp.graph)
-    print("distance\n", adj_matrix)
+    #print("distance\n", adj_matrix)
 
     colors = ["r" for node in tsp.graph.nodes]
     pos=nx.spring_layout(G)
-    draw_graph(tsp.graph, colors, pos)
+    #draw_graph(tsp.graph, colors, pos)
 
 
     best_distance, best_order = brute_force_tsp(adj_matrix, list(G.nodes()))
-    print(
+    '''print(
         "Best order from brute force = "
         + str(best_order)
         + " with total distance = "
         + str(best_distance)
-    )
+    )'''
     return best_order
 
 

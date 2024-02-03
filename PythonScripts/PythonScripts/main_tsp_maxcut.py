@@ -34,12 +34,12 @@ def biggest_cluster(clusters):
     
     return biggest
     
-def refactor():
-    pass
+
 
 
 G = nx.complete_graph(6)
-nx.set_edge_attributes(G, values = 3, name = 'weight')
+for edge in G.edges():
+    G[edge[0]][edge[1]]['weight'] = 3
 
 '''vertices = [0, 1, 2, 3, 4]
 edges = [(0, 1), (0, 3), (0, 4), (1, 2), (2, 3), (4, 1)]
