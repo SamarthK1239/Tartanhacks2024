@@ -30,7 +30,7 @@ def brute_force_tsp(w, N):
     mapping = {}
     for i in range(len(N)):
         mapping[i] = N[i]
-    print("mapping is: ", mapping)
+    #print("mapping is: ", mapping)
 
     a = list(permutations(range(1, len(N))))
     last_best_distance = 1e10
@@ -45,7 +45,7 @@ def brute_force_tsp(w, N):
         if distance < last_best_distance:
             best_order = order
             last_best_distance = distance
-            print("order = " + str(order) + " Distance = " + str(distance))
+            #print("order = " + str(order) + " Distance = " + str(distance))
     
     best_order = list(best_order)
     print("best order is: ", best_order)
