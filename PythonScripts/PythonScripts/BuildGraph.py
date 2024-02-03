@@ -16,7 +16,7 @@ import BuildingGraph
 
 # Building Graph, after which, you can do anything you want!
 
-def making_weight_matrices():
+def making_weight_matrices(inputs):
     gmaps = gmaps_api_ops.get_gmaps_client()
 
     #input_string = input("Enter the places to be visited as a list of cities seperated by a space:/n")
@@ -34,16 +34,15 @@ def making_weight_matrices():
 
 
     # Run the initializer
-    inputs = ["Pittsburgh PA", "State College PA", "Erie PA", "Harrisburg PA", "Philadelphia PA", "New Jersey NJ", "New York NY", "Chicago IL", "Boston MA", "Allentown PA"]
-              #"Gettysburg PA", "Bethlehem PA"]
+
     gmaps_api_ops.run(inputs)
     graph = BuildingGraph.build_graph()
-    print("graph:", graph)
+    # print("graph:", graph)
     # Parse the specific JSON data
     parsed = gmaps_api_ops.directions_parse_json_dictionary()
-
+    coordinates = list()
     # Parsed data is ready for use!
-    print("parsed", parsed)
+    # print("parsed", parsed)
     count = 0
     risk_set = []
     cost_set = []
@@ -56,6 +55,7 @@ def making_weight_matrices():
             if(i!=j):
                 LATITUDE = parsed[count][0]['lat']
                 LONGITUDE  = parsed[count][0]['lng']
+                coordinates.append({'lat': LATITUDE, 'lng': LONGITUDE})
                 risks = asyncio.run(ConnectAPI.get_weather_details(LATITUDE, LONGITUDE))
                 if risks is not None:
                     risk_set.append(risks[0] / 2.0 + risks[1] / 30.0)
@@ -66,7 +66,7 @@ def making_weight_matrices():
                 #print("address ", address)
                 #state = address[0]['address_components'][5]['short_name']
                 state = 'PA'
-                print("state ", state)
+                # print("state ", state)
 
                 #cost.append()
                 if(len(state) == 2 and (state != 'US')):
@@ -87,9 +87,10 @@ def making_weight_matrices():
         medium_set = []
         cost.append(cost_set)
         cost_set = []
-        print("cost:", cost)
-        print("risk", risk)
-        print("medium", medium)
-    return [risk, cost, medium]
+        # print("cost:", cost)
+        # print("risk", risk)
+        # print("medium", medium)
+    return [risk, cost, medium, coordinates]
 
-making_weight_matrices()
+making_weight_matrices(["Pittsburgh PA", "State College PA", "Erie PA", "Harrisburg PA", "Philadelphia PA", "New Jersey NJ", "New York NY", "Chicago IL", "Boston MA", "Allentown PA"])
+              #"Gettysburg PA", "Bethlehem PA"])
