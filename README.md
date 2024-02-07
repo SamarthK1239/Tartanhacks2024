@@ -23,3 +23,5 @@ Factors:
 - Perform Max cut on the cities
 - Repeat max cut until all trucks are accounted for
 - Then provide the travelling salesman problem in each cluster, and compute the cost
+
+*As of February 6th 2024, the API key present in this repository has been deactivated. The code will still run fine but only after a different API key is inserted*
