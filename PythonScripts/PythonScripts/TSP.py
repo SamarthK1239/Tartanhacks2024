@@ -1,7 +1,7 @@
 from itertools import permutations
 import matplotlib.pyplot as plt
 import networkx as nx
-from qiskit-optimization.applications import Tsp
+from qiskit_optimization.applications import Tsp
 
 
 def draw_graph(G, colors, pos):
