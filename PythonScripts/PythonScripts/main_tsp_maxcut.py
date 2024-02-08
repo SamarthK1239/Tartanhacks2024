@@ -3,6 +3,7 @@ from max_cut import *
 import networkx as nx
 import numpy as np
 
+input("Enter the cities that need to be delivered to: ")
 n = int(input("Number of trucks in fleet:: "))
 numberoftrucks = n
 clusters = []
@@ -42,6 +43,7 @@ def biggest_cluster(clusters):
 G = nx.complete_graph(6)
 for edge in G.edges():
     G[edge[0]][edge[1]]['weight'] = 3
+
 
 A = [[0, 985.5, 927.0, 1476.0, 2205.0, 2578.5, 2686.5, 3339.0, 4144.5, 2056.5], 
      [985.5, 0, 1512.0, 621.0, 1386.0, 1764.0, 1710.0, 4104.0, 3181.5, 1192.5], 
@@ -84,7 +86,7 @@ layout = nx.spring_layout(G)
 #print(layout)
 nx.draw(G, layout)
 nx.draw_networkx_edge_labels(G, pos=layout)
-plt.show()
+#plt.show()
 #print(nx.to_numpy_array(G))
 
 routes = list(main(G))
@@ -100,5 +102,3 @@ if choice == 1:
     print("Risk factor for this route is ", risk_factor)
 elif choice == 2: 
     print("Total cost of this route is ", cost_factor)
-
-
